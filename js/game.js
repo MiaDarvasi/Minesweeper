@@ -2,6 +2,7 @@
 
 const MINE = '💥'
 const EMPTY = ''
+const FLAG = '🚩'
 
 
 var gBoard // [{minesAroundCount: , isShown: , isMine: , isMarked:},{},{}}
@@ -10,6 +11,10 @@ var gGame // {isOn: , shownCount: , markedCount: , secsPassed:}
 
 
 function onInit() {
+    // gGame = {
+    //     isOn: true,
+    //     shownCount: 0,
+    // }
 
     gBoard = createBoard()
     setMinesNegsCount()
@@ -67,7 +72,7 @@ function renderBoard() {
                 }
             }
 
-            strHTML += `<td class="${className}" onclick="onCellClicked(${i},${j})">${cell}</td>`
+            strHTML += `<td class="${className}" onclick="onCellClicked(${i},${j})" oncontextmenu="markCell(event,${i},${j})">${cell}</td>`
         }
         strHTML += '</tr>'
     }
@@ -91,6 +96,7 @@ function onCellClicked(i, j) {
     var cellClicked = document.querySelector(`.cell-${i}-${j}`)
     cellClicked.classList.remove('hidden')
     gBoard[i][j].isShown = true
+    // gGame.shownCount++
     if (cellClicked.innerHTML === MINE) return
     if (gBoard[i][j].minesAroundCount === 0) {
         showNegs(i, j, gBoard)
@@ -107,6 +113,7 @@ function showNegs(cellI, cellJ, board) {
             if (i === cellI && j === cellJ) continue;
             var currCell = document.querySelector(`.cell-${i}-${j}`)
             currCell.classList.remove('hidden')
+            // gGame.shownCount++
         }
     }
 
@@ -118,6 +125,23 @@ function setMinesNegsCount() {
             gBoard[i][j].minesAroundCount = NegsCount(i, j, gBoard)
         }
     }
+}
+
+function markCell(event, i, j) {
+    event.preventDefault()
+    var cellMarked = document.querySelector(`.cell-${i}-${j}`)
+    var cellMarkedContent = cellMarked.innerHTML
+    if (cellMarkedContent === cellMarked.innerHTML) {
+        cellMarked.innerHTML = FLAG
+    } else {
+        cellMarkedContent = cellMarked.innerHTML;
+    }
+}
+
+
+
+function gameOver(isWinner) {
+
 }
 
 
