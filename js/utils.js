@@ -17,7 +17,6 @@ function createMat(ROWS, COLS) {
     return mat
 }
 
-
 function NegsCount(cellI, cellJ, board) {
 
     var count = 0
@@ -32,3 +31,4 @@ function NegsCount(cellI, cellJ, board) {
     }
     return count
 }
+
