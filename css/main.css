@@ -5,6 +5,7 @@
 body {
     text-align: center;
     background-color: rgb(253, 214, 221);
+    font-style: oblique;
 }
 
 h1 {
@@ -33,5 +34,22 @@ td {
 .hidden {
     color: transparent;
     background-color: palevioletred;
+}
+
+button {
+    margin: 5px;
+    margin-bottom: 10px;
+    background-color: rgb(195, 109, 137);
+    color: beige;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    font-style: italic;
+    transition: .5s;
+}
+
+button:hover {
+    padding: 7px;
+    background-color: rgb(187, 85, 119);
 }
 

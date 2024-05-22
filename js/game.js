@@ -65,25 +65,12 @@ function setMinesNegsCount(board) {
 }
 
 function addMines(rows, cols, nums, board) {
-    // console.log('rows:', rows, 'cols:', cols, 'nums:', nums)
-    // console.table('board:', board)
+
     for (var i = 0; i < nums; i++) {
         var row = Math.floor(getRandomIntInclusive(0, rows-1))
         var col = Math.floor(getRandomIntInclusive(0, cols-1))
-        console.log('row:', row, 'board:', board[1])
         board[row][col].isMine = true
     }
-    // for (var i = 0; i < nums; i++) {
-    //     for (var j = 0; j < board.length; j++) {
-    //         for (var k = 0; k < board[j].length; k++) {
-                
-    //         }
-    //     }
-
-
-    //     console.log(row, board[1])
-    //     board[row][col].isMine = true
-    // }
     return board
 }
 
