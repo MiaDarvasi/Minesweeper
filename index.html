@@ -13,9 +13,9 @@
     <h2>Game Over</h2>
 
     <div class="difficulty-level">
-        <button onclick="selectBoard('beginner')">Beginner</button>
-        <button onclick="selectBoard('medium')">Medium</button>
-        <button onclick="selectBoard('expert')">Expert</button>
+        <button class="difficulty-btn" onclick="selectBoard('beginner')">Beginner</button>
+        <button class="difficulty-btn" onclick="selectBoard('medium')">Medium</button>
+        <button class="difficulty-btn" onclick="selectBoard('expert')">Expert</button>
     </div>
     <div class="time-block"><span class="timer">0</span></div>
     <div class="lives"></div>
@@ -26,6 +26,8 @@
             </tbody>
         </table>
     </div>
+
+    <button class="reset-btn" onclick="onInit()">❀</button>
 
 <footer>Made by Mia Darvasi</footer>
 

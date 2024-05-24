@@ -32,3 +32,24 @@ function NegsCount(cellI, cellJ, board) {
     return count
 }
 
+function resetTimer() {
+    clearInterval(gTimerInterval)
+    var elSpan = document.querySelector('.timer')
+    elSpan.innerText = '0'
+}
+
+function stopTimer() {
+    clearInterval(gTimerInterval);
+    var elapsedTime = ((Date.now() - gStartTime) / 1000).toFixed(1);
+    var elSpan = document.querySelector('.timer');
+    elSpan.innerText = elapsedTime;
+}
+
+function startTimer() {
+    gStartTime = Date.now()
+    gTimerInterval = setInterval(() => {
+        var seconds = ((Date.now() - gStartTime) / 1000).toFixed(1);
+        var elSpan = document.querySelector('.timer');
+        elSpan.innerText = seconds
+    }, 100);
+}
