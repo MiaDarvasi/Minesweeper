@@ -28,7 +28,7 @@ table {
     margin: auto;
     margin-bottom: 20px;
     border-spacing: .3px;
-    border: solid .5px palevioletred;
+    border: solid .5px beige;
 }
 
 td {
@@ -36,8 +36,9 @@ td {
     height: 10vw;
     font-size: 5vw;
     background-color: pink;
-    opacity: 0.6;
-    color: beige;
+    color: palevioletred;
+    border: solid .5px beige;
+    opacity: 0.8;
 }
 
 .mine {
