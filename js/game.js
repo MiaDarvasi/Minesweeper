@@ -282,9 +282,11 @@ function showMines() {
 
 function checkWin() {
 
-    if (gGame.shownCount === gLevel.size - gLevel.mines &&
-        gGame.markedCount === gLevel.mines)
-        return true
+    if (gGame.shownCount === gLevel.size - gLevel.mines) return true
+
+    // if (gGame.shownCount === gLevel.size - gLevel.mines &&
+    //     gGame.markedCount === gLevel.mines)
+    //     return true
 }
 
 function onDarkMode() {
