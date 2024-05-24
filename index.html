@@ -9,13 +9,14 @@
 </head>
 
 <body onload="onInit()">
+    <button class="view-mode" onclick="onDarkMode()">Dark Mode</button> 
     <h1>Minesweeper</h1>
     <h2>Game Over</h2>
 
     <div class="difficulty-level">
-        <button class="difficulty-btn" onclick="selectBoard('beginner')">Beginner</button>
-        <button class="difficulty-btn" onclick="selectBoard('medium')">Medium</button>
-        <button class="difficulty-btn" onclick="selectBoard('expert')">Expert</button>
+        <button class="difficulty-btn" onclick="onSelectBoard('beginner')">Beginner</button>
+        <button class="difficulty-btn" onclick="onSelectBoard('medium')">Medium</button>
+        <button class="difficulty-btn" onclick="onSelectBoard('expert')">Expert</button>
     </div>
     <div class="time-block"><span class="timer">0</span></div>
     <div class="lives"></div>
@@ -29,7 +30,7 @@
 
     <button class="reset-btn" onclick="onInit()">❀</button>
 
-<footer>Made by Mia Darvasi</footer>
+    <footer>Made by Mia Darvasi</footer>
 
     <script src="js/utils.js"></script>
     <script src="js/game.js"></script>

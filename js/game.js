@@ -36,7 +36,7 @@ function onInit() {
 
 }
 
-function selectBoard(difficulty) {
+function onSelectBoard(difficulty) {
 
     var board
     var level
@@ -168,7 +168,7 @@ function renderLives() {
 }
 
 function onCellClicked(i, j) {
-    
+
     if (!gGame.isOn) return
     if (gGame.shownCount === 0) {
         resetTimer()
@@ -285,4 +285,16 @@ function checkWin() {
     if (gGame.shownCount === gLevel.size - gLevel.mines &&
         gGame.markedCount === gLevel.mines)
         return true
+}
+
+function onDarkMode() {
+    var elBody = document.querySelector('body')
+    var elBtn = document.querySelector('.view-mode')
+    if (elBody.classList.contains('dark-mode')) {
+        elBody.classList.remove('dark-mode')
+        elBtn.innerHTML = 'Dark Mode'
+    } else {
+        elBody.classList.add('dark-mode')
+        elBtn.innerHTML = 'Light Mode'
+    }
 }
