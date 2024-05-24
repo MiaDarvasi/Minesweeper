@@ -20,8 +20,9 @@ h2 {
 
 table {
     margin: auto;
-    border-collapse: collapse;
     margin-bottom: 20px;
+    border-spacing: .3px;
+    border: solid .5px palevioletred;
 }
 
 td {
@@ -32,15 +33,6 @@ td {
     color: beige;
 }
 
-td:hover {
-    cursor: pointer
-}
-
-table,
-td {
-    border: solid rgb(251, 159, 174)
-}
-
 .mine {
     color: rgb(173, 4, 15);
 }
@@ -48,6 +40,19 @@ td {
 .hidden {
     color: transparent;
     background-color: palevioletred;
+    border-bottom: 5px solid rgb(210, 87, 128);
+    border-right: 5px solid rgb(210, 87, 128);
+    border-left: 5px solid rgb(251, 167, 181);
+    border-top: 5px solid rgb(251, 167, 181);
+}
+
+.hidden:hover {
+    cursor: pointer;
+    background-color: rgb(217, 104, 142);
+    border-bottom: 5px solid rgb(191, 75, 114);
+    border-right: 5px solid rgb(191, 75, 114);
+    border-left: 5px solid rgb(247, 155, 171);
+    border-top: 5px solid rgb(247, 155, 171);
 }
 
 .difficulty-btn {
@@ -98,4 +103,5 @@ td {
 
 footer {
     color: rgb(248, 163, 177);
+    margin-bottom: 3px;
 }
