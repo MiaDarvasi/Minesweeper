@@ -26,7 +26,7 @@ h2 {
 
 table {
     margin: auto;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
     border-spacing: .3px;
     border: solid .5px beige;
 }
@@ -92,6 +92,29 @@ td {
     margin-left: 10px;
     color: rgb(199, 45, 81);
     font-family: bold;
+}
+
+.hints {
+    margin-bottom: 20px;
+    font-size: 15px;
+    color: rgb(199, 45, 81);
+}
+
+.hint-btn {
+    background-color: pink;
+    border-radius: 5px;
+    border: none;
+    color: rgb(199, 45, 81);
+    margin: 3px;
+    transition: .5s;
+}
+
+.hint-btn:hover {
+    background-color: rgb(247, 160, 174);
+}
+
+.hint-mode {
+    background-color: rgb(247, 160, 174);
 }
 
 .reset-btn {

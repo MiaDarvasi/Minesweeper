@@ -5,13 +5,14 @@ const EMPTY = ''
 const FLAG = '🚩'
 const NORMAL = '❀'
 const WIN = '♛'
-const LOSE = '☹'
-
+const LOSE = '☠︎︎'
+const HINT = '𖦹'
 
 var gLives
 var gBoard
 var gLevel
 var gGame
+var gHintsCount
 
 var gStartTime
 var gTimerInterval
@@ -31,9 +32,9 @@ function onInit() {
     gBoard = createBoard(4, 4, 2)
     gLevel = { size: 16, mines: 2 }
     gLives = { lives: '❤︎', livesCount: 1 }
+    gHintsCount = 3
 
     renderBoard(gBoard)
-
 }
 
 function onSelectBoard(difficulty) {
@@ -61,6 +62,7 @@ function onSelectBoard(difficulty) {
     gBoard = board
     gLevel = level
     gLives = lives
+    gHintsCount = 3
     gGame = {
         isOn: true,
         shownCount: 0,
@@ -95,6 +97,21 @@ function createBoard(rows, cols, minesNum) {
     return board
 }
 
+function addMines(rows, cols, nums, board) {
+
+    var minesAdded = 0
+    while (minesAdded < nums) {
+        var row = Math.floor(getRandomIntInclusive(0, rows - 1))
+        var col = Math.floor(getRandomIntInclusive(0, cols - 1))
+        var mineLocation = board[row][col]
+        if (!mineLocation.isMine) {
+            mineLocation.isMine = true
+            minesAdded++
+        }
+    }
+    return board
+}
+
 function setMinesNegsCount(board) {
 
     for (var i = 0; i < board.length; i++) {
@@ -102,16 +119,6 @@ function setMinesNegsCount(board) {
             board[i][j].minesAroundCount = NegsCount(i, j, board)
         }
     }
-}
-
-function addMines(rows, cols, nums, board) {
-
-    for (var i = 0; i < nums; i++) {
-        var row = Math.floor(getRandomIntInclusive(0, rows - 1))
-        var col = Math.floor(getRandomIntInclusive(0, cols - 1))
-        board[row][col].isMine = true
-    }
-    return board
 }
 
 function renderBoard(board) {
@@ -148,6 +155,7 @@ function renderBoard(board) {
 
     hideCells(board)
     renderLives()
+    renderHints()
 }
 
 function hideCells(board) {
@@ -164,7 +172,53 @@ function renderLives() {
 
     var elLives = document.querySelector('.lives')
     elLives.innerHTML = gLives.lives
+}
 
+function renderHints() {
+
+    var strHTML = ''
+    for (var i = 0; i < gHintsCount; i++) {
+        strHTML += `<button class="hint-btn num${i}" onclick="hintMode(${i})">${HINT}</button>`
+    }
+    document.querySelector(`.hints-symbl`).innerHTML = strHTML
+}
+
+function hintMode(i) {
+    var elHint = document.querySelector(`.num${i}`)
+    if (elHint.classList.contains('hint-mode')) {
+        elHint.classList.remove('hint-mode')
+        renderHints()
+    } else {
+        elHint.classList.add('hint-mode')
+    }
+}
+
+function showHint(cellI, cellJ) {
+
+    for (var i = cellI - 1; i <= cellI + 1; i++) {
+        if (i < 0 || i >= gBoard.length) continue
+        for (var j = cellJ - 1; j <= cellJ + 1; j++) {
+            if (j < 0 || j >= gBoard[i].length) continue
+            var elCurrCell = document.querySelector(`.cell-${i}-${j}`)
+            if (elCurrCell.classList.contains('hidden')) {
+                elCurrCell.classList.remove('hidden')
+                elCurrCell.classList.add('was-hidden')
+            }
+        }
+    }
+}
+
+function hideHint() {
+
+    for (var i = 0; i < gBoard.length; i++) {
+        for (var j = 0; j < gBoard[0].length; j++) {
+            var elCurrCell = document.querySelector(`.cell-${i}-${j}`)
+            if (elCurrCell.classList.contains('was-hidden')) {
+                elCurrCell.classList.add('hidden')
+                elCurrCell.classList.remove('was-hidden')
+            }
+        }
+    }
 }
 
 function onCellClicked(i, j) {
@@ -175,23 +229,33 @@ function onCellClicked(i, j) {
         startTimer()
     }
 
-    var cellClicked = document.querySelector(`.cell-${i}-${j}`)
-    if (cellClicked.classList.contains('marked')) return
-    if (gBoard[i][j].isShown) return
+    var elHint = document.querySelector('.hint-btn')
+    if (elHint.classList.contains(`hint-mode`)) {
+        elHint.classList.remove(`hint-mode`)
+        showHint(i, j)
+        setTimeout(hideHint, 1000)
+        gHintsCount--
+        renderHints()
+    } else {
+        var cellClicked = document.querySelector(`.cell-${i}-${j}`)
+        if (cellClicked.classList.contains('marked')) return
+        if (gBoard[i][j].isShown) return
 
-    cellClicked.classList.remove('hidden')
-    gGame.shownCount++
-    gBoard[i][j].isShown = true
+        cellClicked.classList.remove('hidden')
+        gBoard[i][j].isShown = true
+        gGame.shownCount++
 
-    if (gBoard[i][j].isMine === true) {
-        decreaseLives()
-        if (gLives.livesCount === 0) gameOver(false)
+        if (gBoard[i][j].isMine === true) {
+            decreaseLives()
+            if (gLives.livesCount === 0) gameOver(false)
+            gGame.markedCount++
+            gGame.shownCount--
+        } else if (gBoard[i][j].minesAroundCount === 0) {
+            showNegs(i, j)
+        }
+
+        if (checkWin()) gameOver(true)
     }
-    if (gBoard[i][j].minesAroundCount === 0) {
-        showNegs(i, j)
-    }
-
-    if (checkWin()) gameOver(true)
 }
 
 function decreaseLives() {
@@ -282,11 +346,9 @@ function showMines() {
 
 function checkWin() {
 
-    if (gGame.shownCount === gLevel.size - gLevel.mines) return true
-
-    // if (gGame.shownCount === gLevel.size - gLevel.mines &&
-    //     gGame.markedCount === gLevel.mines)
-    //     return true
+    if (gGame.shownCount === gLevel.size - gLevel.mines &&
+        gGame.markedCount === gLevel.mines)
+        return true
 }
 
 function onDarkMode() {
